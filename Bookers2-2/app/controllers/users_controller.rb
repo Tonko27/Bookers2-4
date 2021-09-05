@@ -9,8 +9,9 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.all
+    @usersall = User.all
     @book = Book.new
+    @users = User.where.not(id: current_user.id)
   end
 
   def edit
@@ -22,6 +23,16 @@ class UsersController < ApplicationController
     else
       render "edit"
     end
+  end
+  
+  def followings
+    user = User.find(params[:id])
+    @users = user.followings
+  end
+  
+  def followers
+    user = User.find(params[:id])
+    @users = user.followers
   end
 
   private
